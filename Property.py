@@ -1,25 +1,11 @@
-class MyProperty:
-    def __init__(self,fget=None,fset=None,fdel=None):
-        self.fget= fget
-        self.fset=fset
-        self.fdel= fdel
+class CountList:
+    def __init__(self,*args):
+        self.values = [x for x in args]
+        self.count = {}.fromkeys(range(len(self.values)),0)
 
-    def __get__(self, instance, owner):
-        return self.fget(instance)
-    def __set__(self, instance, value):
-        self.fset(instance,value)
-    def __delete__(self, instance):
-        self.fdel(instance)
+    def __len__(self):
+        return len(self.values)
 
-class C:
-    def __init__(self):
-        self._x = None
-
-    def getX(self):
-        return self._x
-    def setX(self,value):
-        self._x=value
-    def delX(self):
-        del self._x
-
-    x = MyProperty(getX,setX,delX)
+    def __getitem__(self, key):
+        self.count[key] += 1
+        return self.values[key]
